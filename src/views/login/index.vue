@@ -44,10 +44,8 @@
           </span>
         </el-form-item>
       </el-tooltip>
-
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
-
-      <div style="position:relative">
+      <!-- <div style="position:relative">
         <div class="tips">
           <span>Username : admin</span>
           <span>Password : any</span>
@@ -60,7 +58,7 @@
         <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
           Or connect with
         </el-button>
-      </div>
+      </div> -->
     </el-form>
 
     <el-dialog title="Or connect with" :visible.sync="showDialog">
@@ -74,20 +72,19 @@
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
+// import { validUsername } from '@/utils/validate'
 import SocialSign from './components/SocialSignin'
-
 export default {
   name: 'Login',
   components: { SocialSign },
   data() {
-    const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
-      } else {
-        callback()
-      }
-    }
+    // const validateUsername = (rule, value, callback) => {
+    //   if (!validUsername(value)) {
+    //     callback(new Error('Please enter the correct user name'))
+    //   } else {
+    //     callback()
+    //   }
+    // }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
         callback(new Error('The password can not be less than 6 digits'))
@@ -98,10 +95,18 @@ export default {
     return {
       loginForm: {
         username: 'admin',
-        password: '111111'
+        password: '123456',
+        login_type: 'phone_and_password'
+      },
+      formFormat: {
+        'phone': '账号',
+        'password': '密码'
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        username: [
+          // { required: true, trigger: 'blur', validator: validateUsername },
+          { min: 1, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur' }
+        ],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       passwordType: 'password',
@@ -161,7 +166,10 @@ export default {
               this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
               this.loading = false
             })
-            .catch(() => {
+            .catch(err => {
+              // 针对error_code 1004
+              var errMessage = JSON.parse(err.message)
+              this.dealCode1004(this.formFormat, errMessage)
               this.loading = false
             })
         } else {
@@ -177,6 +185,25 @@ export default {
         }
         return acc
       }, {})
+    },
+    // 判断1004这个状态的
+    dealCode1004(formFormat, errMessage) {
+      if (errMessage.error_code === 1004) {
+        for (var x in errMessage.data) {
+          if (Object.prototype.hasOwnProperty.call(formFormat, x)) {
+            var err_message = this.formFormat[x] + ':' + errMessage.data[x]
+            this.$message({
+              type: 'error',
+              message: err_message
+            })
+          } else {
+            this.$message({
+              type: 'error',
+              message: x + ':' + errMessage.data[x]
+            })
+          }
+        }
+      }
     }
     // afterQRScan() {
     //   if (e.key === 'x-admin-oauth-code') {

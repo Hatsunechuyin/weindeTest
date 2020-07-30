@@ -1,34 +1,46 @@
 import request from '@/utils/request'
+// 获取测试的api 配置
+import CONFIG from './config'
 // 获取角色列表
-export function getRoles() {
+export function getRoles(data) {
   return request({
-    url: 'https://eyeai.weinde.cn/newserver/apis/permission/role', // 假地址 自行替换
-    method: 'get'
+    url: CONFIG.BASE_API + '/permission/role',
+    method: 'get',
+    params: data
   })
 }
 // 添加角色接口
 export function addRole(data) {
-  console.log(data)
   return request({
-    url: 'https://eyeai.weinde.cn/newserver/apis/permission/role', // 假地址 自行替换
+    url: CONFIG.BASE_API + '/permission/role',
     method: 'post',
     data
   })
 }
 // 获取角色详情
 export function getRoleDetail(id) {
-  let url = 'https://eyeai.weinde.cn/newserver/apis/permission/role/'+id
+  var url = CONFIG.BASE_API + '/permission/role/' + id
   return request({
-    url: url, // 假地址 自行替换
+    url: url,
     method: 'get'
   })
 }
 
 // 删除角色
 export function deleteRole(id) {
-  let url = 'https://eyeai.weinde.cn/newserver/apis/permission/role/'+id
+  var url = CONFIG.BASE_API + '/permission/role/' + id
   return request({
-    url: url, // 假地址 自行替换
+    url: url,
     method: 'delete'
+  })
+}
+
+// 修改角色信息
+export function editRole(id, data) {
+  var url = CONFIG.BASE_API + '/permission/role/' + id
+  return request({
+    url: url,
+    method: 'put',
+    data
   })
 }

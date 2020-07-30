@@ -1,7 +1,7 @@
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
-
+// import { webLogin } from '@/api/login/web'
 const state = {
   token: getToken(),
   name: '',
@@ -43,7 +43,19 @@ const actions = {
       })
     })
   },
-
+  // 网页登录
+  // login({ commit }, userInfo) {
+  //   return new Promise((resolve, reject) => {
+  //     webLogin(userInfo).then(response => {
+  //       console.log(response.headers['access-token'])
+  //       commit('SET_TOKEN', response.headers['access-token'])
+  //       setToken(response.headers['access-token'])
+  //       resolve()
+  //     }).catch(error => {
+  //       reject(error)
+  //     })
+  //   })
+  // },
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {

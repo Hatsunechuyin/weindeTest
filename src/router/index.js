@@ -8,6 +8,7 @@ import Layout from '@/layout'
 
 /* Router Modules */
 // import tableRouter from './modules/table'
+import smsRouter from './modules/sms'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -80,19 +81,18 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/documentation',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/documentation/index'),
-        name: 'Documentation',
-        meta: { title: 'Documentation', icon: 'documentation', affix: true }
-      }
-    ]
-  },
-
+  // {
+  //   path: '/documentation',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/documentation/index'),
+  //       name: 'Documentation',
+  //       meta: { title: 'Documentation', icon: 'documentation', affix: true }
+  //     }
+  //   ]
+  // },
   {
     path: '/profile',
     component: Layout,
@@ -150,7 +150,8 @@ export const asyncRoutes = [
         }
       }
     ]
-  }
+  },
+  smsRouter
 ]
 
 const createRouter = () => new Router({

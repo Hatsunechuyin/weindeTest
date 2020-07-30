@@ -1,13 +1,16 @@
 <template>
-  <div>
-    <h1>测试页面</h1>
+  <div class="app-container">
+
   </div>
 </template>
 
 <script>
 export default {
   name: 'Test',
-  components: { }
+  components: { },
 }
 </script>
 
+<style scoped>
+
+</style>
