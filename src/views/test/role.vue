@@ -22,7 +22,7 @@
       :total="page.total_count"
       @current-change="handleCurrentChange"
     />
-    <el-dialog :title="dialogTitle==1 ? '添加角色' : '修改角色'" :visible.sync="dialogFormVisible">
+    <el-dialog v-if="dialogFormVisible" :title="dialogTitle==1 ? '添加角色' : '修改角色'" :visible.sync="dialogFormVisible">
       <el-form ref="form" :model="form" :rules="rules">
         <el-form-item :label="formFormat.name" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.name" autocomplete="off" />
@@ -118,7 +118,9 @@ export default {
         // 判断是否修改的字段
         this.repeatField.name = res.data.name
         this.repeatField.type = myArray
-
+        // 移除校验结果
+        // this.$refs['form'].resetFields();
+        // this.$refs.form.clearValidate()
         this.dialogTitle = 2
         this.dialogFormVisible = true
       })
@@ -147,12 +149,14 @@ export default {
     // 添加用户显示模态框
     addRole() {
       // 添加角色初始化数据
+      this.form.name = ''
       this.form.type = []
       this.dialogTitle = 1
       // 判断是否修改的字段
       this.repeatField.name = ''
       this.repeatField.type = []
-
+      // 移除校验结果
+      // this.$refs[formName].for;
       this.dialogFormVisible = true
     },
     // 编辑用户的

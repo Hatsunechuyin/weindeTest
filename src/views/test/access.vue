@@ -3,7 +3,7 @@
     <el-row id="form-button">
       <el-button type="primary" @click="showDialog()">添加权限</el-button>
     </el-row>
-    <el-dialog title="添加权限" :visible.sync="dialogFormVisible">
+    <el-dialog v-if="dialogFormVisible" title="添加权限" :visible.sync="dialogFormVisible">
       <el-form ref="form" :model="form" :rules="rules">
         <el-form-item :label="formFormat.name" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.name" autocomplete="off" />
@@ -13,7 +13,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button @click="dialogFormVisible=false">取 消</el-button>
         <el-button v-if="dialogTitle===1" type="primary" @click="addAccess('form')">确 定</el-button>
         <el-button v-else type="primary" @click="editAccess('form')">修 改</el-button>
       </div>
@@ -126,6 +126,7 @@ export default {
       // 判断是否修改的字段
       this.repeatField.remark = ''
       this.dialogTitle = 1
+
       this.dialogFormVisible = true
     },
     // 添加权限
