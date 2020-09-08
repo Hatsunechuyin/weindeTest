@@ -151,7 +151,30 @@ export const asyncRoutes = [
       }
     ]
   },
-  smsRouter
+  smsRouter,
+  {
+    path: '/rust',
+    component: Layout,
+    redirect: '/rust/rocket',
+    alwaysShow: true, // will always show the root menu
+    name: 'Test',
+    meta: {
+      title: 'rust',
+      icon: 'lock',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'rocket',
+        component: () => import('@/views/rust/rocket'),
+        name: 'RocketTest',
+        meta: {
+          title: 'rocket测试页',
+          roles: ['admin']
+        }
+      }
+    ]
+  },
 ]
 
 const createRouter = () => new Router({

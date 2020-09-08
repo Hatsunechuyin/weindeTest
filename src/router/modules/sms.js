@@ -6,6 +6,7 @@ const smsRouter = {
   path: '/sms',
   component: Layout,
   redirect: '/sms/tenxun',
+  alwaysShow: true,
   name: 'sms',
   meta: {
     title: '短信测试',
